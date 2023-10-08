@@ -5,6 +5,9 @@ const c = canvas.getContext('2d')
 canvas.width = 1450
 canvas.height = 600
 
+//variables
+const gravity = 1
+
 // declaring avatar images
 const avatarIdleUp = new Image()
 avatarIdleUp.src='images/avatar-idle-up.png'
@@ -27,6 +30,11 @@ class Player {
         this.walk1 = walk1
         this.walk2 = walk2
         this.position = position
+        this.velocity = {
+            x: 0,
+            y: 1, // default we are falling down
+        }
+        this.height = 100
     }
 
     draw() {
@@ -45,7 +53,12 @@ class Player {
 
     update() {
         this.draw()
-        this.position.y++
+        
+        if (this.height + this.position.y + this.velocity.y < canvas.height) {
+            this.position.y += this.velocity.y
+            this.velocity.y += gravity //add acceleration
+        }
+        
     }
 }
 
